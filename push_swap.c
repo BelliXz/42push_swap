@@ -30,8 +30,13 @@ int	ft_atoi(const char *str)
 			neg *= -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-		nb = (nb * 10) + (str[i++] - '0');
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			nb = (nb * 10) + (str[i++] - '0');
+		else
+			return (0);
+	}
 	return (nb * neg);
 }
 
@@ -42,7 +47,10 @@ t_intlst	*atointlst(t_intlst list, char *argv)
 	i = 0;
 	while (argv[i])
 	{
-		
+		if (ft_atoi(argv[i]))
+			addtolist;
+		else
+			break;
 	}
 }
 
