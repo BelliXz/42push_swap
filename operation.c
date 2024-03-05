@@ -10,33 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	swap(char c, stack *a, stack *b)//assume stack as stack's datatype
+void	ft_swap(stack *a)//assume stack as stack's datatype
 {
 	int	i;
 	int	temp;
 
-	i = 0;
-	// sa
-	if (a[0] && a[1])
-	{
-		temp = a[0];
-		a[0] = a[1];
-		a[1] = temp;
-	}
-	// sb
-	if (b[0] && b[1])
-	{
-		temp = b[0];
-		b[0] = b[1];
-		b[1] = temp;
-	}
-	// ss
+	temp = a[0];
+	a[0] = a[1];
+	a[1] = temp;
+
 }
 
-void	push(char c, stack *a, stack *b)
+void	ft_push(stack *a, stack *b)
 {
-	//pa
-	//pb
+	int	i;
+	int	temp;
+
+	temp = a[0];
+	//remove 1st a and shift up
+	//addfrontlist
+	b[0] = temp;
 }
 
 void	rotate(char c, stack *a, stack *b)//shift up

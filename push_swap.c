@@ -42,7 +42,7 @@ int	ft_atoi(const char *str)
 
 void	*addtolist(t_intlst list, char	*src)
 {
-	
+
 }
 
 t_intlst	*atointlst(t_intlst list, char *argv)
@@ -59,9 +59,14 @@ t_intlst	*atointlst(t_intlst list, char *argv)
 	}
 }
 
-void	push_swap(int argc, char *argv)
+void	push_swap(int argc, char **argv)
 {
 	t_intlst	list;
 
 	list = atointlst(list, argv);
+}
+
+int	main(int argc, char **argv)
+{
+	checkinput;
 }
