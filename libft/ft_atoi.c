@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paradari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 15:17:55 by paradari          #+#    #+#             */
-/*   Updated: 2024/03/04 15:18:13 by paradari         ###   ########.fr       */
+/*   Created: 2023/09/01 14:52:09 by paradari          #+#    #+#             */
+/*   Updated: 2023/10/30 17:10:03 by paradari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {
@@ -30,38 +30,7 @@ int	ft_atoi(const char *str)
 			neg *= -1;
 		i++;
 	}
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			nb = (nb * 10) + (str[i++] - '0');
-		else
-			return (0);
-	}
+	while (str[i] >= '0' && str[i] <= '9')
+		nb = (nb * 10) + (str[i++] - '0');
 	return (nb * neg);
-}
-
-void	*addtolist(t_intlst list, char	*src)
-{
-	
-}
-
-t_intlst	*atointlst(t_intlst list, char *argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (ft_atoi(argv[i]))
-			addtolist;
-		else
-			break;
-	}
-}
-
-void	push_swap(int argc, char *argv)
-{
-	t_intlst	list;
-
-	list = atointlst(list, argv);
 }
