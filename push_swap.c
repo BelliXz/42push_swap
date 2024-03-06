@@ -40,33 +40,327 @@ int	ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-void	*addtolist(t_intlst list, char	*src)
-{
+// void	*addtolist(t_intlst list, char	*src)
+// {
 
+// }
+
+// t_intlst	*atointlst(t_intlst list, char *argv)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (argv[i])
+// 	{
+// 		if (ft_atoi(argv[i]))
+// 			addtolist;
+// 		else
+// 			break;
+// 	}
+// }
+
+// void	push_swap(int argc, char **argv)
+// {
+// 	t_intlst	list;
+
+// 	list = atointlst(list, argv);
+// }
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
-t_intlst	*atointlst(t_intlst list, char *argv)
+
+int	checkint(char **input)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (input[i])
+	{
+		j = 0;
+		while (input[i][j])
+		{
+			// printf ("%d > %c\n",i,input[i][j]);
+			if (!ft_isdigit(input[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && i < n)
+	{
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+		{
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		}
+		i++;
+	}
+	if (i < n)
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	size;
+
+	size = 0;
+	while (*s)
+	{
+		size++;
+		s++;
+	}
+	return (size);
+}
+
+
+int	checkdup(char **input)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (input[i])
+	{
+		j = 1;
+		while (input[j] && j != i)
+		{
+			// printf("i > %s\nj > %s\n",input[i],input[j]);
+			if (!ft_strncmp(input[i], input[j], ft_strlen(input[j])))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	ft_checkoneparam(const char *src)
 {
 	int	i;
 
 	i = 0;
-	while (argv[i])
+	while (src[i])
 	{
-		if (ft_atoi(argv[i]))
-			addtolist;
+		if (!ft_isdigit(src[i]) && src[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+size_t	ft_countwords(char *s, char c)
+{
+	size_t	i;
+	size_t	counter;
+
+	i = 0;
+	counter = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c)
+		{
+			counter++;
+			while (s[i] != c && s[i] != '\0')
+			{
+				i++;
+			}
+			if (s[i] == '\0')
+				return (counter);
+		}
+		i++;
+	}
+	return (counter);
+}
+
+void	ft_setsplits(char *str, char *s, size_t wordlen, size_t *index)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < wordlen)
+	{
+		str[i] = s[*index - 1 + i];
+		i++;
+	}
+	*index += i;
+	str[i] = '\0';
+}
+
+char	*ft_splitsallo(char *s, char c, size_t *index)
+{
+	char	*splitsword;
+	size_t	wordlen;
+
+	wordlen = 0;
+	while (s[*index] != '\0' && wordlen == 0)
+	{
+		if (s[*index] != c)
+		{
+			while (s[*index + wordlen] != c && s[*index + wordlen] != '\0')
+			{
+				wordlen++;
+			}
+			splitsword = (char *)malloc(sizeof(char) * (wordlen + 1));
+			if (!splitsword)
+				return (NULL);
+		}
+		*index += 1;
+	}
+	ft_setsplits(splitsword, s, wordlen, index);
+	return (splitsword);
+}
+
+void	ft_free(char **splits)
+{
+	size_t	i;
+
+	i = 0;
+	while (splits[i])
+	{
+		free(splits[i]);
+		i++;
+	}
+	free(splits);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**splits;
+	size_t	index;
+	size_t	words;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	words = ft_countwords((char *)s, c);
+	splits = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!splits)
+		return (NULL);
+	index = 0;
+	i = 0;
+	while (i < words)
+	{
+		splits[i] = ft_splitsallo((char *)s, c, &index);
+		if (!splits[i])
+		{
+			ft_free(splits);
+			return (NULL);
+		}
+		i++;
+	}
+	splits[i] = NULL;
+	return (splits);
+}
+
+t_list	*ft_lstnew(int content)
+{
+	t_list	*new;
+
+	new = malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	while (lst)
+	{
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	last = NULL;
+	if (lst)
+	{
+		if (*lst)
+		{
+			last = ft_lstlast(*lst);
+			last->next = new;
+		}
 		else
-			break;
+			*lst = new;
 	}
 }
 
-void	push_swap(int argc, char **argv)
+t_list	**ft_getlist(char **src, int n)
 {
-	t_intlst	list;
+	t_list	*new;
+	t_list	**lst;
+	int	i;
 
-	list = atointlst(list, argv);
+	i = 0 + n;
+	while (src[i])
+	{
+		new = ft_lstnew(ft_atoi(src[i]));
+		ft_lstadd_back(lst, new);
+		free (new);
+		i++;
+	}
+	return (lst);
 }
 
 int	main(int argc, char **argv)
 {
-	checkinput;
+	t_list	**list;
+	char	**splits;
+	int		i;
+
+	if (argc == 2)
+	{
+		if (!ft_checkoneparam(argv[1]))
+			printf("Don't need char!!\n");
+		else
+		{
+			splits = ft_split(argv[1], ' ');
+			i = 0;
+			while (splits[i])
+			{
+				printf("%3d) %s\n", i + 1, splits[i]);
+				i++;
+			}
+			if (checkdup(splits))
+			{
+				printf("All Good\n");
+				list = ft_getlist(splits, 0);
+			}
+			else
+				printf("Dup bro\n");
+		}
+	}
+	else
+	{
+		if (checkint(argv) && checkdup(argv))
+		{
+			printf("Good\n");
+			list = ft_getlist(argv, 1);
+		}
+		else
+			printf("Error\n");
+	}
+	// list = ft_getlist(argv, list);
+	return (0);
 }
