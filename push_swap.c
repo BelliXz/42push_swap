@@ -138,7 +138,7 @@ int	checkdup(char **input)
 		j = 1;
 		while (input[j] && j != i)
 		{
-			// printf("i > %s\nj > %s\n",input[i],input[j]);
+			printf("i > %s\nj > %s\n",input[i],input[j]);
 			if (!ft_strncmp(input[i], input[j], ft_strlen(input[j])))
 				return (0);
 			j++;
